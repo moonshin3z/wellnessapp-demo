@@ -1,0 +1,15 @@
+.env
+target/
+*.log
+.vscode/
+.idea/
+*.iml
+node_modules/
+dist/
+.DS_Store
+data/uploads/
+*.jar
+.claude/
+.vercel/
+backend/target/
+nul

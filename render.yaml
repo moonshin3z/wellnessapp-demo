@@ -1,0 +1,51 @@
+databases:
+  - name: wellness-db
+    plan: free
+    databaseName: wellness
+    user: wellness
+    region: oregon
+
+services:
+  - type: web
+    name: wellnessapp-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: SPRING_DATASOURCE_URL
+        sync: false  # Set manually: jdbc:postgresql://<internal-host>:5432/wellness
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: wellness-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: wellness-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: wellness-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXP_MINUTES
+        value: "240"
+      - key: GOOGLE_CLIENT_ID
+        value: "disabled-for-demo"
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false  # Set after Vercel deploy: https://<app>.vercel.app
+      - key: FRONTEND_URL
+        sync: false  # Set after Vercel deploy: https://<app>.vercel.app
+      - key: MAIL_HOST
+        value: "smtp.gmail.com"
+      - key: MAIL_PORT
+        value: "587"
+      - key: MAIL_USERNAME
+        value: ""
+      - key: MAIL_PASSWORD
+        value: ""

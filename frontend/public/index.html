@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>WellnessApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  
+</head>
+<body>
+  <!-- Demo Banner -->
+  <div id="demoBanner" class="demo-banner">
+    <div class="demo-banner__content">
+      <span class="demo-banner__icon">🎯</span>
+      <div class="demo-banner__text">
+        <strong>Modo Demo</strong> &mdash; Inicia sesión con
+        <code>demo@wellness.app</code> / <code>Demo2024!</code>
+      </div>
+      <button class="demo-banner__close" onclick="this.parentElement.parentElement.style.display='none'" aria-label="Cerrar">&times;</button>
+    </div>
+  </div>
+
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <span class="icon-sun">☀️</span>
+    <span class="icon-moon">🌙</span>
+  </button>
+
+  <div class="gradient"></div>
+  <div class="app">
+
+    <!-- LOGIN -->
+    <section id="view-login" class="view view--active">
+      <div class="auth-card">
+        <div class="auth-avatar"><span class="icon">👤</span></div>
+        <h1>Bienvenido de vuelta</h1>
+        <p class="auth-subtitle">Inicia sesión para continuar con tu bienestar</p>
+        <form id="loginForm" class="auth-form">
+          <label class="field">
+            <span>Correo electrónico</span>
+            <input type="email" id="loginEmail" placeholder="tú@correo.com" required>
+          </label>
+          <label class="field">
+            <span>Contraseña</span>
+            <input type="password" id="loginPassword" placeholder="••••••••" required>
+          </label>
+          <div class="forgot-password-link">
+            <button type="button" class="link" data-switch="forgot-password">¿Olvidaste tu contraseña?</button>
+          </div>
+          <button type="submit" class="btn btn--primary">Iniciar sesión</button>
+          <p id="loginStatus" class="status"></p>
+          
+        </form>
+
+        <div class="auth-divider">
+          <span>o continúa con</span>
+        </div>
+
+        <button type="button" id="googleLoginBtn" class="btn-google-custom">
+          <svg class="google-icon" viewBox="0 0 24 24" width="20" height="20">
+            <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          <span>Continuar con Google</span>
+        </button>
+        <div id="googleLogin" class="google-login-container google-hidden"></div>
+
+       
+
+        <p class="auth-switch">¿No tienes una cuenta?
+          <button type="button" class="link" data-switch="register">Regístrate aquí</button>
+        </p>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="view-register" class="view">
+      <div class="auth-card">
+        <div class="auth-avatar"><span class="icon">🆕</span></div>
+        <h1>Crear cuenta</h1>
+        <p class="auth-subtitle">Únete para comenzar a monitorear tu bienestar</p>
+        <form id="registerForm" class="auth-form">
+          <label class="field">
+            <span>Nombre completo</span>
+            <input type="text" id="registerName" placeholder="Tu nombre">
+          </label>
+          <label class="field">
+            <span>Correo electrónico</span>
+            <input type="email" id="registerEmail" placeholder="tú@correo.com" required>
+          </label>
+          <label class="field">
+            <span>Edad</span>
+            <input type="number" id="registerAge" placeholder="18" min="18" max="100">
+          </label>
+          <label class="field">
+            <span>Nivel educativo</span>
+            <select id="registerEducation">
+              <option value="">Selecciona nivel</option>
+              <option>Secundaria</option>
+              <option>Bachillerato</option>
+              <option>Universidad</option>
+              <option>Postgrado</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Contraseña</span>
+            <input type="password" id="registerPassword" placeholder="••••••••" required>
+          </label>
+          <label class="field">
+            <span>Confirmar contraseña</span>
+            <input type="password" id="registerConfirm" placeholder="••••••••" required>
+          </label>
+          <button type="submit" class="btn btn--primary">Crear cuenta</button>
+          <p id="registerStatus" class="status"></p>
+          
+       
+
+
+        </form>
+        <div class="divider">O regístrate con</div>
+        <button type="button" id="googleRegisterBtn" class="btn-google-custom">
+          <svg class="google-icon" viewBox="0 0 24 24" width="20" height="20">
+            <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          <span>Registrarse con Google</span>
+        </button>
+        <div id="googleLoginRegister" class="google-hidden"></div>
+
+
+        <p class="auth-switch">¿Ya tienes una cuenta?
+          <button type="button" class="link" data-switch="login">Inicia sesión aquí</button>
+        </p>
+      </div>
+    </section>
+
+    <!-- FORGOT PASSWORD -->
+    <section id="view-forgot-password" class="view">
+      <div class="auth-card">
+        <div class="auth-avatar"><span class="icon">🔑</span></div>
+        <h1>Recuperar contraseña</h1>
+        <p class="auth-subtitle">Te enviaremos un enlace para restablecer tu contraseña</p>
+        <form id="forgotPasswordForm" class="auth-form">
+          <label class="field">
+            <span>Correo electrónico</span>
+            <input type="email" id="forgotEmail" placeholder="tú@correo.com" required>
+          </label>
+          <button type="submit" class="btn btn--primary">Enviar enlace</button>
+          <p id="forgotPasswordStatus" class="status"></p>
+        </form>
+        <p class="auth-switch">
+          <button type="button" class="link" data-switch="login">← Volver al inicio de sesión</button>
+        </p>
+      </div>
+    </section>
+
+    <!-- RESET PASSWORD -->
+    <section id="view-reset-password" class="view">
+      <div class="auth-card">
+        <div class="auth-avatar"><span class="icon">🔐</span></div>
+        <h1>Nueva contraseña</h1>
+        <p class="auth-subtitle">Ingresa tu nueva contraseña</p>
+        <form id="resetPasswordForm" class="auth-form">
+          <label class="field">
+            <span>Nueva contraseña</span>
+            <input type="password" id="resetNewPassword" placeholder="••••••••" required minlength="6">
+          </label>
+          <label class="field">
+            <span>Confirmar contraseña</span>
+            <input type="password" id="resetConfirmPassword" placeholder="••••••••" required>
+          </label>
+          <button type="submit" class="btn btn--primary">Restablecer contraseña</button>
+          <p id="resetPasswordStatus" class="status"></p>
+        </form>
+        <div id="resetPasswordSuccess" class="hidden">
+          <div class="success-message">
+            <span class="success-icon">✅</span>
+            <h3>¡Contraseña actualizada!</h3>
+            <p>Ya puedes iniciar sesión con tu nueva contraseña</p>
+            <button type="button" class="btn btn--primary" data-switch="login">Ir a iniciar sesión</button>
+          </div>
+        </div>
+        <div id="resetPasswordError" class="hidden">
+          <div class="error-message">
+            <span class="error-icon">❌</span>
+            <h3>Enlace inválido</h3>
+            <p>Este enlace ha expirado o ya fue utilizado</p>
+            <button type="button" class="btn btn--primary" data-switch="forgot-password">Solicitar nuevo enlace</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view">
+      <header class="topbar">
+        <div>
+          <h2 id="dashboardGreeting">Hola</h2>
+          <p class="topbar-date" id="dashboardDate"></p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn--icon" id="btnOpenSettings" title="Configuración">⚙️</button>
+          <button class="btn btn--ghost hidden" id="btnOpenAdmin">Admin</button>
+          <button class="btn btn--ghost" id="btnLogout">Cerrar sesión</button>
+        </div>
+      </header>
+
+      <section class="hero-card">
+        <div>
+          <p class="hero-subtitle">Tu bienestar es importante</p>
+          <h3>Check-in de Bienestar</h3>
+          <p class="hero-description">Toma 2 minutos para cuidar tu salud mental y emocional.</p>
+          <button class="btn btn--primary" id="btnStartGad7">Empezar ahora</button>
+          <span class="hero-points">+10 puntos al completar</span>
+        </div>
+        <div class="hero-illustration">💫</div>
+      </section>
+
+      <!-- Mood Tracker Section -->
+      <section class="mood-tracker" id="moodTracker">
+        <div class="mood-tracker__header">
+          <h3>¿Cómo te sientes hoy?</h3>
+          <p class="mood-tracker__subtitle">Un check-in rápido para seguir tu estado emocional</p>
+        </div>
+        <div class="mood-tracker__options" id="moodOptions">
+          <button class="mood-btn" data-score="1" data-emoji="😢" aria-label="Muy mal">
+            <span class="mood-btn__emoji">😢</span>
+            <span class="mood-btn__label">Muy mal</span>
+          </button>
+          <button class="mood-btn" data-score="2" data-emoji="😔" aria-label="Mal">
+            <span class="mood-btn__emoji">😔</span>
+            <span class="mood-btn__label">Mal</span>
+          </button>
+          <button class="mood-btn" data-score="3" data-emoji="😐" aria-label="Neutral">
+            <span class="mood-btn__emoji">😐</span>
+            <span class="mood-btn__label">Neutral</span>
+          </button>
+          <button class="mood-btn" data-score="4" data-emoji="😊" aria-label="Bien">
+            <span class="mood-btn__emoji">😊</span>
+            <span class="mood-btn__label">Bien</span>
+          </button>
+          <button class="mood-btn" data-score="5" data-emoji="😄" aria-label="Muy bien">
+            <span class="mood-btn__emoji">😄</span>
+            <span class="mood-btn__label">Muy bien</span>
+          </button>
+        </div>
+        <div class="mood-tracker__notes hidden" id="moodNotesPanel">
+          <textarea id="moodNotes" placeholder="¿Qué está pasando? (opcional)" maxlength="500"></textarea>
+          <div class="mood-tags" id="moodTagsPanel">
+            <span class="mood-tags__label" id="moodTagsLabel">¿Qué influyó en tu día? (opcional)</span>
+            <div class="mood-tags__options" id="moodTagsOptions">
+              <!-- Tags will be rendered dynamically based on mood -->
+            </div>
+          </div>
+          <div class="sleep-tracker" id="sleepTrackerPanel">
+            <span class="sleep-tracker__label">🌙 ¿Cómo dormiste anoche? (opcional)</span>
+            <div class="sleep-tracker__inputs">
+              <div class="sleep-input sleep-input--wheel">
+                <label>Horas</label>
+                <div class="sleep-wheel-container">
+                  <button type="button" class="sleep-wheel-btn sleep-wheel-up" id="sleepWheelUp">▲</button>
+                  <div class="sleep-wheel-display" id="sleepWheelDisplay">
+                    <span class="sleep-wheel-value" id="sleepHoursValue">--</span>
+                    <span class="sleep-wheel-unit">hrs</span>
+                  </div>
+                  <button type="button" class="sleep-wheel-btn sleep-wheel-down" id="sleepWheelDown">▼</button>
+                </div>
+              </div>
+              <div class="sleep-input">
+                <label>Calidad</label>
+                <div class="sleep-quality-options" id="sleepQualityOptions">
+                  <button type="button" class="sleep-quality-btn" data-quality="1" title="Muy mal">😫</button>
+                  <button type="button" class="sleep-quality-btn" data-quality="2" title="Mal">😴</button>
+                  <button type="button" class="sleep-quality-btn" data-quality="3" title="Regular">😐</button>
+                  <button type="button" class="sleep-quality-btn" data-quality="4" title="Bien">😊</button>
+                  <button type="button" class="sleep-quality-btn" data-quality="5" title="Excelente">🌟</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mood-tracker__actions">
+            <button class="btn btn--ghost" id="btnCancelMood">Cancelar</button>
+            <button class="btn btn--primary" id="btnSaveMood">Guardar</button>
+          </div>
+        </div>
+        <div class="mood-tracker__logged hidden" id="moodLoggedPanel">
+          <div class="mood-logged">
+            <span class="mood-logged__emoji" id="loggedMoodEmoji">😊</span>
+            <span class="mood-logged__text">Ya registraste tu estado de ánimo hoy</span>
+          </div>
+        </div>
+        <div class="mood-tracker__history" id="moodHistoryPreview">
+          <div class="mood-history-dots" id="moodHistoryDots"></div>
+        </div>
+
+        <!-- Mood Calendar -->
+        <div class="mood-calendar mood-calendar--compact" id="moodCalendar">
+          <div class="mood-calendar__header">
+            <button class="mood-calendar__nav" id="btnPrevMonth" aria-label="Mes anterior">◀</button>
+            <h4 class="mood-calendar__title" id="calendarTitle">Esta semana</h4>
+            <button class="mood-calendar__nav" id="btnNextMonth" aria-label="Mes siguiente">▶</button>
+            <button class="mood-calendar__toggle" id="btnToggleCalendar" aria-label="Expandir calendario">
+              <span class="toggle-expand">Ver mes ▼</span>
+              <span class="toggle-collapse">Ocultar ▲</span>
+            </button>
+          </div>
+          <div class="mood-calendar__weekdays">
+            <span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sa</span><span>Do</span>
+          </div>
+          <div class="mood-calendar__grid" id="calendarGrid">
+            <!-- Days will be rendered by JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <section class="insights" id="insightsPanel">
+        <article class="insight-card insight-card--empty" id="cardGad7">
+          <header class="insight-head">
+            <div>
+              <h3>Seguimiento GAD-7</h3>
+              <p class="insight-subtitle">Niveles de ansiedad en el tiempo</p>
+            </div>
+            <span class="insight-badge">Ansiedad</span>
+          </header>
+          <div class="insight-body">
+            <svg id="chartGad7" class="insight-chart" viewBox="0 0 100 40"></svg>
+            <div class="insight-empty">Aún no tienes resultados registrados.</div>
+            <dl class="insight-stats">
+              <div><dt>Evaluaciones</dt><dd id="gadCount">0</dd></div>
+              <div><dt>Promedio</dt><dd id="gadAverage">0</dd></div>
+              <div><dt>Tendencia</dt><dd id="gadTrend">—</dd></div>
+            </dl>
+            <p class="insight-last" id="gadLast">Cuando completes evaluaciones verás aquí el detalle más reciente.</p>
+          </div>
+        </article>
+
+        <article class="insight-card insight-card--empty" id="cardPhq9">
+          <header class="insight-head">
+            <div>
+              <h3>Seguimiento PHQ-9</h3>
+              <p class="insight-subtitle">Indicadores de estado de ánimo</p>
+            </div>
+            <span class="insight-badge">Ánimo</span>
+          </header>
+          <div class="insight-body">
+            <svg id="chartPhq9" class="insight-chart" viewBox="0 0 100 40"></svg>
+            <div class="insight-empty">Registra tus primeros resultados para ver tu progreso.</div>
+            <dl class="insight-stats">
+              <div><dt>Evaluaciones</dt><dd id="phqCount">0</dd></div>
+              <div><dt>Promedio</dt><dd id="phqAverage">0</dd></div>
+              <div><dt>Tendencia</dt><dd id="phqTrend">—</dd></div>
+            </dl>
+            <p class="insight-last" id="phqLast">Tus resultados más recientes aparecerán aquí al completar evaluaciones.</p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Mini Stats Summary (always visible) -->
+      <section class="mini-stats" id="miniStatsSection">
+        <article class="mini-stat" id="streakCard">
+          <span class="mini-stat__icon">📅</span>
+          <span class="mini-stat__value" id="statCurrentStreak">0</span>
+          <span class="mini-stat__label">días de racha</span>
+        </article>
+        <article class="mini-stat">
+          <span class="mini-stat__icon">😊</span>
+          <span class="mini-stat__value" id="statAvgMood">--</span>
+          <span class="mini-stat__label">ánimo promedio</span>
+        </article>
+        <article class="mini-stat">
+          <span class="mini-stat__icon">📊</span>
+          <span class="mini-stat__value" id="statTotalEntries">0</span>
+          <span class="mini-stat__label">registros</span>
+        </article>
+      </section>
+
+      <!-- Achievements Section -->
+      <section class="achievements-section" id="achievementsSection">
+        <div class="achievements-header">
+          <h3>Logros</h3>
+          <span class="achievements-count" id="achievementsCount">0/0</span>
+        </div>
+        <div class="achievements-grid" id="achievementsGrid">
+          <!-- Achievements will be rendered here by JS -->
+        </div>
+      </section>
+
+      <section class="quick-links">
+        <article class="quick-card">
+          <div class="quick-icon">📈</div>
+          <div>
+            <h4>Mi Progreso</h4>
+            <p>Visualiza tus tendencias y estadísticas detalladas.</p>
+          </div>
+          <button class="btn btn--light" id="btnOpenProgress">Ver progreso</button>
+        </article>
+
+        <article class="quick-card">
+          <div class="quick-icon">🌬️</div>
+          <div>
+            <h4>Respiración</h4>
+            <p>Ejercicios guiados para reducir el estrés y la ansiedad.</p>
+          </div>
+          <button class="btn btn--light" id="btnOpenBreathing">Comenzar</button>
+        </article>
+
+        <article class="quick-card quick-card--action">
+          <div class="quick-icon">🩺</div>
+          <div>
+            <h4>Evaluaciones clínicas</h4>
+            <p>Explora las evaluaciones PHQ-9 y GAD-7 para monitorear tu progreso.</p>
+          </div>
+          <button class="btn btn--light" id="btnStartPhq9">Iniciar PHQ-9</button>
+        </article>
+
+        <article class="quick-card">
+          <div class="quick-icon">🧰</div>
+          <div>
+            <h4>Recursos</h4>
+            <p>Tips y herramientas útiles seleccionadas por especialistas.</p>
+          </div>
+          <button class="btn btn--light" id="btnOpenResources">Ver recursos</button>
+        </article>
+
+        <article class="quick-card quick-card--action">
+          <div class="quick-icon">📚</div>
+          <div>
+            <h4>Historial de evaluaciones</h4>
+            <p>Consulta tus resultados previos y notas personales.</p>
+          </div>
+          <button class="btn btn--light" id="btnOpenHistory">Ver historial</button>
+        </article>
+      </section>
+
+      <section id="historyPanel" class="history hidden">
+        <div class="history-header">
+          <div class="history-header-main">
+            <h3>Tu historial reciente</h3>
+            <button class="link" id="btnCloseHistory">Ocultar</button>
+          </div>
+
+          <div class="history-filters">
+            <div class="history-filter">
+              <span class="history-filter-label">Tipo</span>
+              <select id="historyFilterType">
+                <option value="">Todos</option>
+                <option value="GAD7">GAD-7</option>
+                <option value="PHQ9">PHQ-9</option>
+              </select>
+            </div>
+
+            <div class="history-filter">
+              <span class="history-filter-label">Rango</span>
+              <select id="historyFilterRange">
+                <option value="all">Todo</option>
+                <option value="7">Últimos 7 días</option>
+                <option value="30">Últimos 30 días</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <ul id="historyList" class="history-list"></ul>
+      </section>
+
+      <!-- Progress Panel -->
+      <section id="progressPanel" class="progress-panel hidden">
+        <div class="progress-panel__header">
+          <h3>Tu Progreso</h3>
+          <button class="link" id="btnCloseProgress">Ocultar</button>
+        </div>
+
+        <!-- Stats Summary Cards -->
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-card__icon">📊</div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="statTotalEntriesPanel">0</span>
+              <span class="stat-card__label">Registros totales</span>
+            </div>
+          </article>
+          <article class="stat-card" id="streakCardPanel">
+            <div class="stat-card__icon">📅</div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="statCurrentStreakPanel">0</span>
+              <span class="stat-card__label">Racha actual</span>
+            </div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-card__icon">🏆</div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="statLongestStreak">0</span>
+              <span class="stat-card__label">Mejor racha</span>
+            </div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-card__icon">📈</div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="statTrendPanel">--</span>
+              <span class="stat-card__label">Tendencia</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- Mood Trend Chart -->
+        <div class="chart-container">
+          <header class="chart-header">
+            <h3>Tendencia de Estado de Ánimo</h3>
+            <div class="chart-controls">
+              <button class="chart-period-btn active" data-period="7">7 días</button>
+              <button class="chart-period-btn" data-period="30">30 días</button>
+              <button class="chart-period-btn" data-period="90">3 meses</button>
+            </div>
+          </header>
+          <div class="chart-wrapper">
+            <canvas id="moodTrendChart"></canvas>
+          </div>
+          <div class="chart-empty hidden" id="moodChartEmpty">
+            <p>Registra tu estado de ánimo para ver tu tendencia</p>
+          </div>
+        </div>
+
+        <!-- Assessment Comparison Chart -->
+        <div class="chart-container">
+          <header class="chart-header">
+            <h3>Comparativa de Evaluaciones</h3>
+            <p class="chart-subtitle">Últimas 5 evaluaciones GAD-7 y PHQ-9</p>
+          </header>
+          <div class="chart-wrapper">
+            <canvas id="assessmentChart"></canvas>
+          </div>
+          <div class="chart-empty hidden" id="assessmentChartEmpty">
+            <p>Completa evaluaciones GAD-7 o PHQ-9 para ver la comparativa</p>
+          </div>
+        </div>
+      </section>
+
+    </section> <!-- CIERRE CORRECTO DEL DASHBOARD -->
+
+
+    <!-- ASSESSMENT -->
+    <section id="view-assessment" class="view">
+      <header class="assessment-header">
+        <button class="back" id="btnBackToDashboard">←</button>
+        <div>
+          <p class="assessment-title" id="assessmentTitle"></p>
+          <p class="assessment-step" id="assessmentStep"></p>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="assessmentProgress"></div>
+        </div>
+      </header>
+
+      <section class="question-card" id="questionCard"></section>
+
+      <footer class="assessment-footer">
+        <button class="btn btn--ghost" id="btnPrevQuestion">Anterior</button>
+        <div class="assessment-points">+10 puntos al completar</div>
+        <button class="btn btn--primary" id="btnNextQuestion">Siguiente</button>
+      </footer>
+    </section>
+
+
+    <!-- RESULT -->
+    <section id="view-result" class="view">
+      <div class="result-card">
+        <div class="result-icon">✨</div>
+        <h2 id="resultTitle"></h2>
+        <p id="resultSummary"></p>
+
+        <ul id="resultDetails" class="result-details"></ul>
+
+        <section class="result-analytics" id="resultAnalytics">
+          <div class="result-chart-panel">
+            <h3>Tus respuestas</h3>
+            <div class="result-chart" id="resultAnswersChart"></div>
+            <div class="result-chart-scale"><span>0</span><span>1</span><span>2</span><span>3</span></div>
+          </div>
+
+          <div class="result-stats-panel">
+            <h3>Estadísticas clave</h3>
+            <ul class="result-stats">
+              <li><span>Puntaje promedio por pregunta</span><strong id="resultAverage"></strong></li>
+              <li><span>Respuesta más alta</span><strong id="resultMax"></strong></li>
+              <li><span>Áreas a trabajar</span><strong id="resultFocus"></strong></li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="result-actions">
+          <button class="btn btn--primary" id="btnResultDashboard">Volver al inicio</button>
+          <button class="btn btn--light" id="btnResultHistory">Ver historial</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ADMIN -->
+    <section id="view-admin" class="view">
+      <header class="topbar">
+        <div>
+          <h2>Panel de Administración</h2>
+          <p class="topbar-date">Herramientas solo para administradores</p>
+        </div>
+        <div class="admin-actions">
+          <button class="btn btn--ghost" id="btnBackFromAdmin">Volver</button>
+        </div>
+      </header>
+
+      <div class="admin-grid">
+        <article class="admin-card">
+          <h3>Promover usuario a ADMIN</h3>
+          <form id="formPromote">
+            <label class="field">
+              <span>ID de usuario</span>
+              <input type="number" id="promoteUserId" min="1" required>
+            </label>
+            <button type="submit" class="btn btn--primary">Promover</button>
+            <p id="promoteStatus" class="status"></p>
+          </form>
+        </article>
+
+        <article class="admin-card">
+          <h3>Token actual (payload)</h3>
+          <pre id="jwtPayload">—</pre>
+          <button class="btn btn--light" id="btnRefreshPayload">Refrescar payload</button>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- BREATHING EXERCISES -->
+    <section id="view-breathing" class="view hidden">
+      <header class="topbar">
+        <div>
+          <h2>Ejercicios de Respiración</h2>
+          <p class="topbar-date">Técnicas para calmar la ansiedad</p>
+        </div>
+        <button class="btn btn--ghost" id="btnBackFromBreathing">Volver</button>
+      </header>
+
+      <div class="breathing-container">
+        <!-- Exercise Selection -->
+        <div class="breathing-exercises" id="breathingExercises">
+          <h3>Elige una técnica</h3>
+          <div class="breathing-cards">
+            <button class="breathing-card" data-exercise="box">
+              <span class="breathing-card__icon">⬜</span>
+              <span class="breathing-card__name">Respiración Cuadrada</span>
+              <span class="breathing-card__desc">4-4-4-4 segundos</span>
+              <span class="breathing-card__time">~4 min</span>
+            </button>
+            <button class="breathing-card" data-exercise="478">
+              <span class="breathing-card__icon">🌙</span>
+              <span class="breathing-card__name">Técnica 4-7-8</span>
+              <span class="breathing-card__desc">Inhala 4, retén 7, exhala 8</span>
+              <span class="breathing-card__time">~5 min</span>
+            </button>
+            <button class="breathing-card" data-exercise="relaxing">
+              <span class="breathing-card__icon">🌊</span>
+              <span class="breathing-card__name">Respiración Relajante</span>
+              <span class="breathing-card__desc">Inhala 4, exhala 6</span>
+              <span class="breathing-card__time">~3 min</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Active Exercise -->
+        <div class="breathing-active hidden" id="breathingActive">
+          <div class="breathing-visual">
+            <div class="breathing-circle" id="breathingCircle">
+              <span class="breathing-instruction" id="breathingInstruction">Prepárate...</span>
+            </div>
+            <div class="breathing-timer" id="breathingTimer">0:00</div>
+          </div>
+          <div class="breathing-info">
+            <span class="breathing-exercise-name" id="breathingExerciseName">Respiración Cuadrada</span>
+            <span class="breathing-cycle" id="breathingCycle">Ciclo 1 de 4</span>
+          </div>
+          <div class="breathing-controls">
+            <button class="btn btn--ghost" id="btnStopBreathing">Detener</button>
+            <button class="btn btn--primary" id="btnPauseBreathing">Pausar</button>
+          </div>
+        </div>
+
+        <!-- Completion -->
+        <div class="breathing-complete hidden" id="breathingComplete">
+          <div class="breathing-complete__icon">🎉</div>
+          <h3>¡Bien hecho!</h3>
+          <p>Completaste el ejercicio de respiración</p>
+          <div class="breathing-complete__stats">
+            <span id="breathingCompleteDuration">4 minutos</span>
+            <span id="breathingCompleteCycles">4 ciclos</span>
+          </div>
+          <div class="breathing-complete__actions">
+            <button class="btn btn--ghost" id="btnBreathingAgain">Repetir</button>
+            <button class="btn btn--primary" id="btnBreathingDone">Terminar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- RESOURCES -->
+    <section id="view-resources" class="view">
+      <header class="topbar">
+        <div>
+          <h2>Recursos</h2>
+          <p class="topbar-date">Materiales recomendados por especialistas</p>
+        </div>
+        <button class="btn btn--ghost" id="btnBackFromResources">Volver</button>
+      </header>
+
+      <div id="resourceUploader" class="admin-card hidden">
+        <h3>Subir recurso</h3>
+        <form id="formResourceUpload" enctype="multipart/form-data">
+          <label class="field"><span>Título</span><input id="resTitle" required></label>
+          <label class="field"><span>Descripción</span><input id="resDesc"></label>
+          <label class="field"><span>Categoría</span><input id="resCat"></label>
+          <label class="field"><span>Archivo</span><input type="file" id="resFile"></label>
+          <button type="submit" class="btn btn--primary">Publicar</button>
+          <p id="resUploadStatus" class="status"></p>
+        </form>
+      </div>
+
+      <section class="history" style="margin:16px 0;">
+        <div class="history-header">
+          <h3>Filtrar recursos</h3>
+        </div>
+        <div class="history-list" style="display:flex; gap:16px; flex-wrap:wrap;">
+          <label class="field" style="flex:1;">
+            <span>Búsqueda</span>
+            <input type="search" id="resourceSearch">
+          </label>
+          <label class="field" style="flex:1;">
+            <span>Categoría</span>
+            <select id="resourceFilterCategory">
+              <option value="">Todas</option>
+              <option value="Ansiedad">Ansiedad</option>
+              <option value="Depresión">Depresión</option>
+              <option value="Sueño">Sueño</option>
+              <option value="Estrés">Estrés</option>
+              <option value="Guías">Guías</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <div id="resourcesList" class="insights"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="view-settings" class="view">
+      <header class="topbar">
+        <div>
+          <h2>Configuración</h2>
+          <p class="topbar-date">Gestiona tu cuenta y preferencias</p>
+        </div>
+        <button class="btn btn--ghost" id="btnBackFromSettings">Volver</button>
+      </header>
+
+      <div class="settings-container">
+        <!-- Account Info -->
+        <section class="settings-section">
+          <h3 class="settings-section__title">👤 Información de Cuenta</h3>
+          <div class="settings-card">
+            <div class="settings-field">
+              <label>Nombre</label>
+              <span id="settingsName">--</span>
+            </div>
+            <div class="settings-field">
+              <label>Correo electrónico</label>
+              <span id="settingsEmail">--</span>
+            </div>
+            <div class="settings-field">
+              <label>Edad</label>
+              <span id="settingsAge">--</span>
+            </div>
+            <div class="settings-field">
+              <label>Nivel educativo</label>
+              <span id="settingsEducation">--</span>
+            </div>
+            <div class="settings-field">
+              <label>Miembro desde</label>
+              <span id="settingsMemberSince">--</span>
+            </div>
+            <div class="settings-field">
+              <label>Tipo de cuenta</label>
+              <span id="settingsRole" class="badge">Usuario</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preferences -->
+        <section class="settings-section">
+          <h3 class="settings-section__title">🎨 Preferencias</h3>
+          <div class="settings-card">
+            <div class="settings-option">
+              <div class="settings-option__info">
+                <span class="settings-option__label">Tema oscuro</span>
+                <span class="settings-option__desc">Cambia la apariencia de la aplicación</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="settingsThemeToggle">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Data & Privacy -->
+        <section class="settings-section">
+          <h3 class="settings-section__title">📊 Datos y Privacidad</h3>
+          <div class="settings-card">
+            <div class="settings-option settings-option--button">
+              <div class="settings-option__info">
+                <span class="settings-option__label">Exportar mis datos</span>
+                <span class="settings-option__desc">Descarga todos tus registros en formato JSON</span>
+              </div>
+              <button class="btn btn--light" id="btnExportData">Exportar</button>
+            </div>
+            <div class="settings-divider"></div>
+            <div class="settings-option settings-option--button">
+              <div class="settings-option__info">
+                <span class="settings-option__label settings-option__label--danger">Eliminar cuenta</span>
+                <span class="settings-option__desc">Esta acción es irreversible y eliminará todos tus datos</span>
+              </div>
+              <button class="btn btn--danger-outline" id="btnDeleteAccount">Eliminar</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Session -->
+        <section class="settings-section">
+          <h3 class="settings-section__title">🔐 Sesión</h3>
+          <div class="settings-card">
+            <div class="settings-option settings-option--button">
+              <div class="settings-option__info">
+                <span class="settings-option__label">Cambiar contraseña</span>
+                <span class="settings-option__desc">Recibirás un enlace por correo para cambiar tu contraseña</span>
+              </div>
+              <button class="btn btn--light" id="btnChangePassword">Enviar enlace</button>
+            </div>
+            <div class="settings-divider"></div>
+            <div class="settings-option settings-option--button">
+              <div class="settings-option__info">
+                <span class="settings-option__label">Cerrar sesión</span>
+                <span class="settings-option__desc">Sal de tu cuenta en este dispositivo</span>
+              </div>
+              <button class="btn btn--ghost" id="btnSettingsLogout">Cerrar sesión</button>
+            </div>
+          </div>
+        </section>
+
+        <p class="settings-version">WellnessApp v1.0.0</p>
+      </div>
+    </section>
+
+    <!-- Delete Account Modal -->
+    <div id="deleteAccountBackdrop" class="modal-backdrop hidden"></div>
+    <div id="deleteAccountModal" class="settings-modal hidden">
+      <div class="settings-modal__header">
+        <h3>⚠️ Eliminar cuenta</h3>
+        <button class="modal-close" id="btnCloseDeleteModal">×</button>
+      </div>
+      <div class="settings-modal__content">
+        <p class="settings-modal__warning">Esta acción eliminará permanentemente:</p>
+        <ul class="settings-modal__list">
+          <li>Tu perfil y datos personales</li>
+          <li>Todos tus registros de ánimo</li>
+          <li>Historial de evaluaciones</li>
+          <li>Logros y estadísticas</li>
+        </ul>
+        <label class="field">
+          <span>Escribe "ELIMINAR" para confirmar</span>
+          <input type="text" id="deleteConfirmation" placeholder="ELIMINAR">
+        </label>
+        <p id="deleteAccountStatus" class="status"></p>
+        <div class="settings-modal__actions">
+          <button type="button" class="btn btn--ghost" id="btnCancelDelete">Cancelar</button>
+          <button type="button" class="btn btn--danger" id="btnConfirmDelete" disabled>Eliminar mi cuenta</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMING SOON -->
+    <section id="view-comingsoon" class="view">
+      <header class="topbar">
+        <div>
+          <h2>Comunidad</h2>
+          <p class="topbar-date">Espacio social de WellnessApp</p>
+        </div>
+        <button class="btn btn--ghost" id="btnBackFromComingSoon">Volver</button>
+      </header>
+
+      <div class="hero-card" style="text-align:center; min-height:50vh;">
+        <div>
+          <div style="font-size:64px;">🚧</div>
+          <h3>Coming soon…</h3>
+          <p class="hero-description">
+            Estamos construyendo una experiencia para que conectes, compartas y crezcas con tu comunidad.
+          </p>
+          <p class="hero-points">¡Vuelve pronto! ✨</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- MOOD DETAIL MODAL -->
+  <div id="moodDetailBackdrop" class="modal-backdrop hidden"></div>
+  <div id="moodDetailModal" class="mood-detail-modal hidden" role="dialog" aria-modal="true">
+    <div class="mood-detail-modal__header">
+      <h3 id="moodDetailTitle">Registro del día</h3>
+      <button id="moodDetailClose" class="modal-close">×</button>
+    </div>
+    <div class="mood-detail-modal__content">
+      <div class="mood-detail__date" id="moodDetailDate">--</div>
+      <div class="mood-detail__mood">
+        <span class="mood-detail__emoji" id="moodDetailEmoji">😊</span>
+        <span class="mood-detail__label" id="moodDetailLabel">Bien</span>
+      </div>
+      <div class="mood-detail__section" id="moodDetailTagsSection">
+        <label>Factores:</label>
+        <div class="mood-detail__tags" id="moodDetailTags"></div>
+      </div>
+      <div class="mood-detail__section" id="moodDetailSleepSection">
+        <label>Sueño:</label>
+        <div class="mood-detail__sleep">
+          <span id="moodDetailSleepHours">-- hrs</span>
+          <span id="moodDetailSleepQuality"></span>
+        </div>
+      </div>
+      <div class="mood-detail__section" id="moodDetailNotesSection">
+        <label>Notas:</label>
+        <p id="moodDetailNotes" class="mood-detail__notes">--</p>
+      </div>
+    </div>
+    <div class="mood-detail-modal__actions">
+      <button class="btn btn--ghost btn--danger" id="btnDeleteMood">Eliminar</button>
+      <button class="btn btn--primary" id="btnEditMood">Editar</button>
+    </div>
+  </div>
+
+  <!-- MOOD EDIT MODAL -->
+  <div id="moodEditModal" class="mood-edit-modal hidden" role="dialog" aria-modal="true">
+    <div class="mood-detail-modal__header">
+      <h3>Editar registro</h3>
+      <button id="moodEditClose" class="modal-close">×</button>
+    </div>
+    <div class="mood-edit-modal__content">
+      <div class="mood-edit__section">
+        <label>Estado de ánimo</label>
+        <div class="mood-edit__options" id="moodEditOptions">
+          <button type="button" class="mood-edit-btn" data-score="1">😢</button>
+          <button type="button" class="mood-edit-btn" data-score="2">😕</button>
+          <button type="button" class="mood-edit-btn" data-score="3">😐</button>
+          <button type="button" class="mood-edit-btn" data-score="4">😊</button>
+          <button type="button" class="mood-edit-btn" data-score="5">😄</button>
+        </div>
+      </div>
+      <div class="mood-edit__section">
+        <label>Notas</label>
+        <textarea id="moodEditNotes" placeholder="¿Qué estaba pasando?" maxlength="500"></textarea>
+      </div>
+      <div class="mood-edit__section">
+        <label>Horas de sueño</label>
+        <div class="sleep-wheel-container sleep-wheel-container--edit">
+          <button type="button" class="sleep-wheel-btn" id="moodEditSleepUp">▲</button>
+          <div class="sleep-wheel-display">
+            <span class="sleep-wheel-value" id="moodEditSleepValue">--</span>
+            <span class="sleep-wheel-unit">hrs</span>
+          </div>
+          <button type="button" class="sleep-wheel-btn" id="moodEditSleepDown">▼</button>
+        </div>
+      </div>
+      <div class="mood-edit__section">
+        <label>Calidad del sueño</label>
+        <div class="sleep-quality-options" id="moodEditQualityOptions">
+          <button type="button" class="sleep-quality-btn" data-quality="1">😫</button>
+          <button type="button" class="sleep-quality-btn" data-quality="2">😴</button>
+          <button type="button" class="sleep-quality-btn" data-quality="3">😐</button>
+          <button type="button" class="sleep-quality-btn" data-quality="4">😊</button>
+          <button type="button" class="sleep-quality-btn" data-quality="5">🌟</button>
+        </div>
+      </div>
+    </div>
+    <div class="mood-detail-modal__actions">
+      <button class="btn btn--ghost" id="btnCancelEdit">Cancelar</button>
+      <button class="btn btn--primary" id="btnSaveEdit">Guardar</button>
+    </div>
+  </div>
+
+  <button id="helpFab" class="fab">❔</button>
+  <div id="helpBackdrop" class="help-backdrop" hidden></div>
+
+  <!-- HELP PANEL -->
+  <section id="helpPanel" class="help-panel" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+    <header class="help-header">
+      <h3 id="helpTitle">💜 Ayuda y Apoyo</h3>
+      <button id="helpClose" class="help-close">×</button>
+    </header>
+    <p class="help-softmsg">🌿 Respira suavemente… estás a salvo. Todo va a estar bien.</p>
+    <p class="help-subtitle">Recursos disponibles para ti</p>
+
+    <div class="help-actions">
+      <article class="help-item help-item--danger">
+        <div class="help-item__icon">📞</div>
+        <div class="help-item__content">
+          <h4>Línea de Crisis</h4>
+          <p>Apoyo inmediato 24/7</p>
+        </div>
+        <a href="tel:123" class="btn btn--primary help-cta">Llamar ahora</a>
+      </article>
+
+      <article class="help-item">
+        <div class="help-item__icon">📘</div>
+        <div class="help-item__content">
+          <h4>Primeros pasos</h4>
+          <p>Cómo usar la aplicación</p>
+        </div>
+        <button id="openIntro" class="btn btn--light help-cta">Ver guía</button>
+      </article>
+
+      <article class="help-item">
+        <div class="help-item__icon">🙌</div>
+        <div class="help-item__content">
+          <h4>Tips de Asesoramiento</h4>
+          <p>Maneja mejor tu tiempo</p>
+        </div>
+        <button id="openCoaching" class="btn btn--light help-cta">Abrir tips</button>
+      </article>
+    </div>
+
+    <h4 class="help-tips-title">💡 Tips Rápidos</h4>
+    <ul class="help-tips">
+      <li>🫁 <strong>Respira profundo:</strong> Inhala 4, mantén 7, exhala 8.</li>
+      <li>🧠 <strong>Señales de alerta:</strong> irritabilidad constante o falta de sueño.</li>
+      <li>🤝 <strong>Pide ayuda:</strong> Hablar con alguien siempre ayuda.</li>
+      <li>🚨 <strong>En crisis:</strong> contacta emergencias de tu zona.</li>
+    </ul>
+  </section>
+
+  <section id="introPanel" class="mini-panel" hidden>
+    <header class="mini-header">
+        <h3>📘 Primeros Pasos</h3>
+        <button data-close class="mini-close">×</button>
+    </header>
+    <ul class="mini-list">
+      <li>✅ Completa tu primer check-in de bienestar.</li>
+      <li>✅ Revisa tu historial y progreso emocional.</li>
+      <li>✅ Explora recursos y herramientas útiles.</li>
+      <li>✅ Ajusta notificaciones según tus preferencias.</li>
+    </ul>
+</section>
+
+  <section id="coachingPanel" class="mini-panel" hidden>
+    <header class="mini-header">
+        <h3>🙌 Tips de Asesoramiento</h3>
+        <button data-close class="mini-close">×</button>
+    </header>
+    <ul class="mini-list">
+      <li>🕒 Organiza tu día en bloques de 25 minutos.</li>
+      <li>📵 Aleja distracciones mientras estudias.</li>
+      <li>⏳ Haz pausas activas para evitar agotamiento.</li>
+      <li>🤸 Estira o camina 5 minutos cada hora.</li>
+    </ul>
+</section>
+
+<!-- Chart.js for data visualization -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<!-- Configuration: These values should be set via environment at deployment -->
+<!-- For Docker: mount a config.js file or use envsubst to inject values -->
+<script src="js/config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+
+  <!-- Pre-warm backend on Render free tier (cold start ~30-60s) -->
+  <script>
+  (function() {
+    var api = (window.APP_CONFIG && window.APP_CONFIG.API_BASE_URL) || '';
+    if (api && api.indexOf('localhost') === -1) {
+      var el = document.createElement('div');
+      el.id = 'warmup';
+      el.innerHTML = '<div style="position:fixed;bottom:16px;right:16px;z-index:9998;background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:12px 18px;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,0.1);display:flex;align-items:center;gap:8px;font-family:Inter,sans-serif"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2D9596;animation:wp 1s infinite"></span> Conectando con el servidor...</div>';
+      var s = document.createElement('style');
+      s.textContent = '@keyframes wp{0%,100%{opacity:1}50%{opacity:.3}}';
+      document.head.appendChild(s);
+      document.body.appendChild(el);
+      fetch(api + '/health', {mode:'cors'})
+        .then(function() {
+          el.innerHTML = '<div style="position:fixed;bottom:16px;right:16px;z-index:9998;background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:12px 18px;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,0.1);font-family:Inter,sans-serif">&#10003; Servidor listo</div>';
+          setTimeout(function(){ el.remove(); }, 2000);
+        })
+        .catch(function() {
+          el.querySelector('div').innerHTML = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f59e0b;animation:wp 1s infinite"></span> El servidor está iniciando (~30s)...';
+        });
+    }
+  })();
+  </script>
+
+  <script src="js/app.js"></script>
+
+</body>
+</html>
