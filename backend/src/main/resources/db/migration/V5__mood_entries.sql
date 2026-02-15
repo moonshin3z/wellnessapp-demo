@@ -1,5 +1,7 @@
--- Mood tracking entries table
-CREATE TABLE IF NOT EXISTS mood_entries (
+-- Recreate mood_entries with proper schema (replaces V1 definition)
+DROP TABLE IF EXISTS mood_entries;
+
+CREATE TABLE mood_entries (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     mood_score INT NOT NULL CHECK (mood_score >= 1 AND mood_score <= 5),
