@@ -3460,6 +3460,25 @@ const AiInsights = (() => {
       if (!data || data.disponible === false) { section.style.display = "none"; return; }
 
       showEl("aiInsightsLoading", false);
+
+      // Handle "no data" or "error" responses from backend
+      if (data.sinDatos || data.error) {
+        showEl("aiInsightsError", true);
+        const errEl = $("aiInsightsError");
+        if (errEl) {
+          const msg = data.mensaje || "No se pudieron cargar los insights.";
+          errEl.innerHTML = `<p>${msg} ${data.error ? '<a href="#" id="btnRetryAiInsights">Reintentar</a>' : ''}</p>`;
+          const retry = $("btnRetryAiInsights");
+          if (retry) retry.addEventListener("click", e => { e.preventDefault(); load(true); });
+        }
+        return;
+      }
+
+      // Has actual AI data — show the grid
+      if (!data.patrones && !data.correlacionSueno && !data.analisisTags) {
+        section.style.display = "none"; return;
+      }
+
       showEl("aiInsightsGrid", true);
 
       const p = $("aiPatterns"); if (p) p.textContent = data.patrones || "--";
@@ -3489,6 +3508,10 @@ const AiInsights = (() => {
     } catch (e) {
       showEl("aiInsightsLoading", false);
       showEl("aiInsightsError", true);
+      const errEl = $("aiInsightsError");
+      if (errEl) errEl.innerHTML = '<p>No se pudieron cargar los insights. <a href="#" id="btnRetryAiInsights">Reintentar</a></p>';
+      const retry = $("btnRetryAiInsights");
+      if (retry) retry.addEventListener("click", ev => { ev.preventDefault(); load(true); });
       console.warn("AI insights error:", e);
     }
   }
