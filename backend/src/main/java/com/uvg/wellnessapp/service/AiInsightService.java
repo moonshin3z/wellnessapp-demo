@@ -88,7 +88,9 @@ public class AiInsightService {
             return response;
         } catch (Exception e) {
             log.error("Error calling Claude API for dashboard insights", e);
-            return "{\"disponible\":true,\"error\":true,\"mensaje\":\"No se pudo generar el análisis en este momento.\"}";
+            String detail = e.getMessage() != null ? e.getMessage().replace("\"", "'").replace("\n", " ") : "unknown";
+            if (detail.length() > 200) detail = detail.substring(0, 200);
+            return "{\"disponible\":true,\"error\":true,\"mensaje\":\"Error: " + detail + "\"}";
         }
     }
 
@@ -108,7 +110,9 @@ public class AiInsightService {
             return callClaude(prompt);
         } catch (Exception e) {
             log.error("Error calling Claude API for assessment analysis", e);
-            return "{\"disponible\":true,\"error\":true,\"mensaje\":\"No se pudo generar el análisis.\"}";
+            String detail = e.getMessage() != null ? e.getMessage().replace("\"", "'").replace("\n", " ") : "unknown";
+            if (detail.length() > 200) detail = detail.substring(0, 200);
+            return "{\"disponible\":true,\"error\":true,\"mensaje\":\"Error: " + detail + "\"}";
         }
     }
 
