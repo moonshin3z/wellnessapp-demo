@@ -381,6 +381,53 @@
         </article>
       </section>
 
+      <!-- AI Insights Section -->
+      <section class="ai-insights-section" id="aiInsightsSection" style="display:none">
+        <div class="ai-insights-header">
+          <h3>🤖 Perspectivas de IA</h3>
+          <button class="btn btn--ghost btn--sm" id="btnRefreshAiInsights" title="Actualizar análisis">🔄</button>
+        </div>
+
+        <div class="ai-loading" id="aiInsightsLoading" style="display:none">
+          <div class="ai-loading-spinner"></div>
+          <p>Analizando tus datos...</p>
+        </div>
+
+        <div class="ai-error" id="aiInsightsError" style="display:none">
+          <p>No se pudieron cargar los insights. <a href="#" id="btnRetryAiInsights">Reintentar</a></p>
+        </div>
+
+        <div class="ai-risk-alert" id="aiRiskAlert" style="display:none">
+          <strong>⚠️ Atención:</strong>
+          <span id="aiRiskMessage"></span>
+        </div>
+
+        <div class="ai-insights-grid" id="aiInsightsGrid" style="display:none">
+          <article class="ai-insight-card">
+            <div class="ai-insight-card__icon">🔍</div>
+            <h4>Patrones detectados</h4>
+            <p id="aiPatterns">--</p>
+          </article>
+          <article class="ai-insight-card">
+            <div class="ai-insight-card__icon">🌙</div>
+            <h4>Sueño y ánimo</h4>
+            <p id="aiSleep">--</p>
+          </article>
+          <article class="ai-insight-card">
+            <div class="ai-insight-card__icon">🏷️</div>
+            <h4>Tus actividades</h4>
+            <p id="aiTags">--</p>
+          </article>
+          <article class="ai-insight-card ai-insight-card--wide">
+            <div class="ai-insight-card__icon">💡</div>
+            <h4>Recomendaciones</h4>
+            <ul id="aiRecommendations" class="ai-recommendations-list"></ul>
+          </article>
+        </div>
+
+        <p class="ai-disclaimer" id="aiDisclaimer" style="display:none"></p>
+      </section>
+
       <!-- Achievements Section -->
       <section class="achievements-section" id="achievementsSection">
         <div class="achievements-header">
@@ -591,6 +638,46 @@
               <li><span>Respuesta más alta</span><strong id="resultMax"></strong></li>
               <li><span>Áreas a trabajar</span><strong id="resultFocus"></strong></li>
             </ul>
+          </div>
+        </section>
+
+        <!-- AI Assessment Analysis -->
+        <section class="ai-assessment-section" id="aiAssessmentSection" style="display:none">
+          <h3>🤖 Análisis de IA</h3>
+
+          <div class="ai-loading" id="aiAssessmentLoading" style="display:none">
+            <div class="ai-loading-spinner"></div>
+            <p>Generando análisis personalizado...</p>
+          </div>
+
+          <div class="ai-error" id="aiAssessmentError" style="display:none">
+            <p>No se pudo generar el análisis.</p>
+          </div>
+
+          <div id="aiAssessmentContent" style="display:none">
+            <div class="ai-assessment-block">
+              <h4>Análisis detallado</h4>
+              <p id="aiAssessmentAnalysis"></p>
+            </div>
+            <div class="ai-assessment-block">
+              <h4>Comparación histórica</h4>
+              <p id="aiAssessmentComparison"></p>
+            </div>
+            <div class="ai-assessment-columns">
+              <div class="ai-assessment-block ai-assessment-block--concern" id="aiConcernBlock" style="display:none">
+                <h4>⚠️ Áreas de preocupación</h4>
+                <ul id="aiConcernList"></ul>
+              </div>
+              <div class="ai-assessment-block ai-assessment-block--improve" id="aiImproveBlock" style="display:none">
+                <h4>✅ Áreas de mejora</h4>
+                <ul id="aiImproveList"></ul>
+              </div>
+            </div>
+            <div class="ai-assessment-block">
+              <h4>💡 Recomendaciones</h4>
+              <ul id="aiAssessmentRecommendations" class="ai-recommendations-list"></ul>
+            </div>
+            <p class="ai-disclaimer" id="aiAssessmentDisclaimer"></p>
           </div>
         </section>
 

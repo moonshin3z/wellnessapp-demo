@@ -71,3 +71,6 @@ app:
 google:
   client-id: ${GOOGLE_CLIENT_ID}
 
+anthropic:
+  api-key: ${ANTHROPIC_API_KEY:}
+

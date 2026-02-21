@@ -1216,6 +1216,9 @@ function updateDashboard() {
 
   // Load achievements
   Achievements.render();
+
+  // Load AI insights (non-blocking)
+  AiInsights.load(false);
 }
 
 function updateAdminVisibility() {
@@ -1280,6 +1283,16 @@ function apiGoogleLogin(idToken) {
   return fetchJson(`${API}/auth/google`, {
     method: "POST",
     body: JSON.stringify({ idToken })
+  });
+}
+
+function apiAiInsights(refresh = false) {
+  return fetchJson(`${API}/ai/insights?refresh=${refresh}`, { auth: true, timeoutMs: 30000 });
+}
+function apiAiAssessmentAnalysis(assessmentType, total, category, answers) {
+  return fetchJson(`${API}/ai/assessment-analysis`, {
+    method: "POST", auth: true, timeoutMs: 30000,
+    body: JSON.stringify({ assessmentType, total, category, answers })
   });
 }
 
@@ -1643,6 +1656,9 @@ function showResult(result, type, answers) {
   chart.forEach(bar => {
     bar.style.background = cfg.color;
   });
+
+  // Trigger AI assessment analysis (non-blocking)
+  AiInsights.loadAssessmentAnalysis(type, totalScore, result.category, answers);
 }
 
 
@@ -3423,6 +3439,115 @@ function getLevelConfig(score, type) {
 
 
  
+// ====== AI Insights ======
+const AiInsights = (() => {
+  const $ = id => document.getElementById(id);
+
+  function showEl(id, show) { const el = $(id); if (el) el.style.display = show ? "" : "none"; }
+
+  async function load(refresh) {
+    const section = $("aiInsightsSection");
+    if (!section) return;
+    section.style.display = "";
+    showEl("aiInsightsLoading", true);
+    showEl("aiInsightsGrid", false);
+    showEl("aiInsightsError", false);
+    showEl("aiRiskAlert", false);
+    showEl("aiDisclaimer", false);
+
+    try {
+      const data = await apiAiInsights(refresh);
+      if (!data || data.disponible === false) { section.style.display = "none"; return; }
+
+      showEl("aiInsightsLoading", false);
+      showEl("aiInsightsGrid", true);
+
+      const p = $("aiPatterns"); if (p) p.textContent = data.patrones || "--";
+      const s = $("aiSleep"); if (s) s.textContent = data.correlacionSueno || "--";
+      const t = $("aiTags"); if (t) t.textContent = data.analisisTags || "--";
+
+      const recList = $("aiRecommendations");
+      if (recList && Array.isArray(data.recomendaciones)) {
+        recList.innerHTML = "";
+        data.recomendaciones.forEach(r => {
+          const li = document.createElement("li");
+          li.textContent = r;
+          recList.appendChild(li);
+        });
+      }
+
+      if (data.riesgo && data.riesgo.nivel && data.riesgo.nivel !== "bajo") {
+        showEl("aiRiskAlert", true);
+        const msg = $("aiRiskMessage");
+        if (msg) msg.textContent = data.riesgo.mensaje || "Se detectaron indicadores que merecen atención.";
+      }
+
+      if (data.disclaimer) {
+        showEl("aiDisclaimer", true);
+        const d = $("aiDisclaimer"); if (d) d.textContent = data.disclaimer;
+      }
+    } catch (e) {
+      showEl("aiInsightsLoading", false);
+      showEl("aiInsightsError", true);
+      console.warn("AI insights error:", e);
+    }
+  }
+
+  async function loadAssessmentAnalysis(type, total, category, answers) {
+    const section = $("aiAssessmentSection");
+    if (!section) return;
+    section.style.display = "";
+    showEl("aiAssessmentLoading", true);
+    showEl("aiAssessmentContent", false);
+    showEl("aiAssessmentError", false);
+
+    try {
+      const data = await apiAiAssessmentAnalysis(type, total, category, answers);
+      if (!data || data.disponible === false) { section.style.display = "none"; return; }
+
+      showEl("aiAssessmentLoading", false);
+      showEl("aiAssessmentContent", true);
+
+      const a = $("aiAssessmentAnalysis"); if (a) a.textContent = data.analisis || "";
+      const c = $("aiAssessmentComparison"); if (c) c.textContent = data.comparacion || "";
+
+      if (Array.isArray(data.areasPreocupacion) && data.areasPreocupacion.length > 0) {
+        showEl("aiConcernBlock", true);
+        const ul = $("aiConcernList");
+        if (ul) { ul.innerHTML = ""; data.areasPreocupacion.forEach(t => { const li = document.createElement("li"); li.textContent = t; ul.appendChild(li); }); }
+      }
+
+      if (Array.isArray(data.areasMejora) && data.areasMejora.length > 0) {
+        showEl("aiImproveBlock", true);
+        const ul = $("aiImproveList");
+        if (ul) { ul.innerHTML = ""; data.areasMejora.forEach(t => { const li = document.createElement("li"); li.textContent = t; ul.appendChild(li); }); }
+      }
+
+      const recList = $("aiAssessmentRecommendations");
+      if (recList && Array.isArray(data.recomendaciones)) {
+        recList.innerHTML = "";
+        data.recomendaciones.forEach(r => { const li = document.createElement("li"); li.textContent = r; recList.appendChild(li); });
+      }
+
+      const d = $("aiAssessmentDisclaimer"); if (d) d.textContent = data.disclaimer || "";
+    } catch (e) {
+      showEl("aiAssessmentLoading", false);
+      showEl("aiAssessmentError", true);
+      console.warn("AI assessment error:", e);
+    }
+  }
+
+  // Wire up buttons after DOM ready
+  document.addEventListener("DOMContentLoaded", () => {
+    const btnRefresh = $("btnRefreshAiInsights");
+    if (btnRefresh) btnRefresh.addEventListener("click", () => load(true));
+    const btnRetry = $("btnRetryAiInsights");
+    if (btnRetry) btnRetry.addEventListener("click", e => { e.preventDefault(); load(false); });
+  });
+
+  return { load, loadAssessmentAnalysis };
+})();
+
 // ====== Inicio ======
 ensureAuth();
 
